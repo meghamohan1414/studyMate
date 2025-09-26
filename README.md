@@ -4,14 +4,14 @@
 ### Core Idea: 
 StudyMate is web application that dynamically tailors educational content - articles, quizzes, and flashcards - to each student's evolving proficiency of the subject. By integrating the course versioned in Git with advanced AI orchestration, embeddings and LLMs, StudyMate delivers personalized Learning paths that optimize engagement and retention.
 
-#### Challenge & Opportunity: 
+### Challenge & Opportunity: 
 Traditional Learning Management relies on static modules, leaving students either bored by redundancy or overwhelmed by gaps. StudyMate addresses this by:
 1. Adaptive Content Delivery: Continually adjusting difficulty based on learner performance.
 2. Dynamic Assessment: Generating bespoke quizzes and flashcards to reinforce concepts.
 3. Data-Driven Insights: Tracking mastery trends to inform instructors and learners.
 
-#### Use Case & Workflow
-#### Target Users 
+### Use Case & Workflow
+### Target Users 
 - K-12 Students & Educators: Teachers author curriculum in Git; students receive adaptive quizzes and flashcards.
   - Adaptive practice paths: AI-generated quizes and puzzles that automatically adjusts the diculty of questions based on the student's past performance.
   - Instant, tailored Feedback: Natural Language explanation for wrong answers, plus targeted flashcards generated on the fly to reinforce missed concepts.
@@ -26,7 +26,7 @@ Traditional Learning Management relies on static modules, leaving students eithe
   - Progress Tracking and Motivation: Automated reminders (via GitHub Actions + DryRun) nudge learners when it’s time to review flashcards or retake a quiz, while dashboards track streaks and mastery levels.
   - Rapid Prototyping of Projects: Using Cursor and CodeRabbit, self-learners can scaffold mini-projects (e.g., a simple web app) with AI-suggested code snippets, then test and iterate within the same environment.
 
-#### Workflow Steps:
+### Workflow Steps:
 1. Upload or Connect Documents:
    Instructors commit or push Markdown lessons, quizzes, and flashcards to the Git repo; students import external resources or upload files directly. A dashboard banner and toast confirm “Content Indexed: X items ready.”
 - How it works:
@@ -60,7 +60,7 @@ Traditional Learning Management relies on static modules, leaving students eithe
   
 By following these five stages—Upload or Connect Documents, Prompt & Generate Content, RAG-Powered Retrieval, Structured Generation, and Review & Export—StudyMate automates and personalizes learning workflows from end to end.
 
-#### AI Features to Be Implemented
+### AI Features to Be Implemented
 - **Prompt Engineering**
   - _Tools:_ OpenAI GPT-4, orchestrated by LangChain, monitored in LangSmith
   - _Why:_ Ensures consistent, pedagogically sound generations and enables analytics-driven prompt refinement.
@@ -77,8 +77,7 @@ By following these five stages—Upload or Connect Documents, Prompt & Generate 
   - _Tools:_ Prometheus/Grafana for system telemetry, LangSmith for prompt analytics, Sentry/Rollbar for error tracking  
   - _Why:_ Monitors performance, reliability, and prompt health to support SLAs and rapid debugging.
 
-#### Technical Approach
-
+### Technical Approach
 1. **CI/CD & Content Ingestion**  
    - **GitHub Actions** runs DryRun schema checks and Snyk scans on each commit.  
    - **FastAPI** microservices handle webhooks to clone repos or process uploads.
@@ -98,5 +97,41 @@ By following these five stages—Upload or Connect Documents, Prompt & Generate 
 5. **Deployment & Monitoring**  
    - Dockerized microservices (FastAPI, LangChain) run on Kubernetes, managed via Terraform.  
    - **Prometheus/Grafana** dashboards surface system, embedding, and prompt metrics; **Sentry/Rollbar** captures runtime exceptions.
+  
+### Example Prompts & Expected outputs
+**Quiz Generation Prompt**
+Generate 5 multiple-choice questions covering the Pythagorean theorem. Output a JSON array with fields: question, options[], answer.
+**Expected JSON**  
+[
+  {
+    "question": "In a right triangle with legs 3 and 4, what is the hypotenuse?",
+    "options": ["5", "6", "7", "8"],
+    "answer": "5"
+  },
+  …
+]
+**Flashcard Generation Prompt**
+Based on the student’s incorrect answers, retrieve related lesson segments on right-angle triangles and create 3 flashcards with term and definition in JSON.
+**Expected JSON**
+[
+  {
+    "term": "Pythagorean Theorem",
+    "definition": "In a right triangle, a² + b² = c², where c is the hypotenuse."
+  },
+  …
+]
+
+### Evaluation Strategy
+- Automated Metrics: Precision/recall on quiz questions; relevance scoring for flashcards.
+- Human Audits: Educator reviews logged in LangSmith to refine prompts.
+- Learning Outcomes: Track improvements in student scores, completion rates, and time-on-task reductions.
+
+### Observability Plan
+- System Telemetry: quiz_generation_latency, flashcard_success_rate, and error rates in Prometheus/Grafana.
+- Embedding Health: Pinecone query latency and usage via Diamond → Graphite.
+- Prompt Analytics: Token usage, latency, and success rates in LangSmith.
+- Error Tracking & Alerts: Sentry/Rollbar captures exceptions; Slack notifications trigger on SLA breaches (e.g., 95th-percentile latency > 2s).
+
+StudyMate brings together LangSmith, Cursor, Diamond, CodeRabbit, Snyk, DryRun, Pinecone, and OpenAI into a cohesive, secure, and highly observable AI platform that personalizes learning at scale.
 
 
