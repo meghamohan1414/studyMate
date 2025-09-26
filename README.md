@@ -101,25 +101,25 @@ By following these five stages—Upload or Connect Documents, Prompt & Generate 
 ### Example Prompts & Expected outputs
 - **Quiz Generation Prompt**
 Generate 5 multiple-choice questions covering the Pythagorean theorem. Output a JSON array with fields: question, options[], answer.
-- **Expected JSON**  
-[
-  {
-    "question": "In a right triangle with legs 3 and 4, what is the hypotenuse?",
-    "options": ["5", "6", "7", "8"],
-    "answer": "5"
-  },
-  …
-]
+  - **Expected JSON**  
+    [
+      {
+        "question": "In a right triangle with legs 3 and 4, what is the hypotenuse?",
+        "options": ["5", "6", "7", "8"],
+        "answer": "5"
+      },
+      …
+    ]
 - **Flashcard Generation Prompt**
 Based on the student’s incorrect answers, retrieve related lesson segments on right-angle triangles and create 3 flashcards with term and definition in JSON.
-- **Expected JSON**
-[
-  {
-    "term": "Pythagorean Theorem",
-    "definition": "In a right triangle, a² + b² = c², where c is the hypotenuse."
-  },
-  …
-]
+  - **Expected JSON**
+    [
+      {
+        "term": "Pythagorean Theorem",
+        "definition": "In a right triangle, a² + b² = c², where c is the hypotenuse."
+      },
+      …
+    ]
 
 ### Evaluation Strategy
 - Automated Metrics: Precision/recall on quiz questions; relevance scoring for flashcards.
