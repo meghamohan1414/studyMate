@@ -64,6 +64,18 @@ By following these five stages—Upload or Connect Documents, Prompt & Generate 
 - **Prompt Engineering**
   - _Tools:_ OpenAI GPT-4, orchestrated by LangChain, monitored in LangSmith
   - _Why:_ Ensures consistent, pedagogically sound generations and enables analytics-driven prompt refinement.
+- **Structured Outputs**  
+  - _Tools:_ JSON schemas, validated by DryRun  
+  - _Why:_ Guarantees predictable front-end rendering and reliable downstream analytics.
+- **Retrieval-Augmented Generation (RAG)**  
+  - _Tools:_ Pinecone (metrics via Diamond), OpenAI embeddings  
+  - _Why:_ Semantic retrieval surfaces contextually relevant content, keeping AI outputs aligned with source material.
+- **Evaluation Frameworks**  
+  - _Tools:_ Synthetic test suites, human-in-the-loop reviews logged in LangSmith  
+  - _Why:_ Quantifies quiz accuracy (precision/recall) and learning gains, guiding continuous improvement.
+- **Observability Tools**  
+  - _Tools:_ Prometheus/Grafana for system telemetry, LangSmith for prompt analytics, Sentry/Rollbar for error tracking  
+  - _Why:_ Monitors performance, reliability, and prompt health to support SLAs and rapid debugging.
 
 
 
