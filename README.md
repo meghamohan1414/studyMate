@@ -60,6 +60,11 @@ Traditional Learning Management relies on static modules, leaving students eithe
   
 By following these five stages—Upload or Connect Documents, Prompt & Generate Content, RAG-Powered Retrieval, Structured Generation, and Review & Export—StudyMate automates and personalizes learning workflows from end to end.
 
+#### AI Features to Be Implemented
+- **Prompt Engineering**
+  - _Tools:_ OpenAI GPT-4, orchestrated by LangChain, monitored in LangSmith
+  - _Why:_ Ensures consistent, pedagogically sound generations and enables analytics-driven prompt refinement.
+
 
 
 
