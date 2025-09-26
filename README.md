@@ -29,31 +29,31 @@ Traditional Learning Management relies on static modules, leaving students eithe
 #### Workflow Steps:
 1. Upload or Connect Documents:
    Instructors commit or push Markdown lessons, quizzes, and flashcards to the Git repo; students import external resources or upload files directly. A dashboard banner and toast confirm “Content Indexed: X items ready.”
-   How it works:
+How it works:
    1. WebhookTrigger: GitHub Actions invokes FastAPI ingestion job.
    2. Content Parsing: FastAPI clones the repo or ingests uploads, parsing Markdown via markdown-it-py.
    3. Validation & Security: DryRun validates JSON schemas for quizzes/flashcards; Snyk scans embedded code for vulnerabilities.
    4. Embedding & Indexing: OpenAI embeddings API vectorizes content; Pinecone upserts vectors with metadata; Diamond exports metrics to Graphite.
 2. Prompt & Generate Content:
    Educators select “Create Quiz” or “Generate Flashcards,” and students click “Start Quiz.” A prompt interface appears for any custom natural-language instructions.
-   How it works:
+How it works:
    1. Prompt Engineering: LangChain wraps user input in templates; LangSmith logs prompt usage and performance.
    2. Profile Retrieval: LangChain fetches learner profiles (history, preferences) from the database.
    3. Initial AI Call: OpenAI GPT-4 generates seed questions or flashcard outlines based on prompts and profiles.
 3. RAG-Powered Retrieval
    A loader message “Gathering relevant content…” appears before finalizing quiz or flashcard details.
-   How it works:
+How it works:
    1. Vector Search: Pinecone queries return top-K semantically related lesson and Q&A chunks.
    2. Context Assembly: Retrieved text and metadata (topic, difficulty) are collated for AI enrichment.
 4. Structured Generation:
    A personalized quiz, flashcard set, or study plan renders instantly as a table or interactive card deck.
-   How it works:
+How it works:
    1. LLM Enrichment: LangChain feeds contexts and seed content into GPT-4 with instructions for JSON or Markdown outputs.
    2. DryRun or jsonschema validates the AI response against defined structures.
    3. Formatting: JSON is transformed into UI components or downloadable CSV/Markdown.
 5. Review & Export:
    Options to “Download CSV/JSON,” “Send to Slack,” or “Publish to LMS” appear alongside content. Educators review analytics before approving.
-   How it Works:
+How it Works:
    1. Export Logging: Prometheus captures export events; Sentry records errors.
    2. Integration Hooks: Service posts data to webhooks (Slack, LMS APIs, BI tools) or generates pre-signed S3 URLs.
    3. Feedback Loop: Learner interactions and review approvals feed back into the profiling and prompt-optimization pipelines.
