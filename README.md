@@ -11,7 +11,7 @@ Traditional Learning Management relies on static modules, leaving students eithe
 3. Data-Driven Insights: Tracking mastery trends to inform instructors and learners.
 
 #### Use Case & Workflow
-##### Target Users 
+#### Target Users 
 - K-12 Students & Educators: Teachers author curriculum in Git; students receive adaptive quizzes and flashcards.
   - Adaptive practice paths: AI-generated quizes and puzzles that automatically adjusts the diculty of questions based on the student's past performance.
   - Instant, tailored Feedback: Natural Language explanation for wrong answers, plus targeted flashcards generated on the fly to reinforce missed concepts.
@@ -26,26 +26,39 @@ Traditional Learning Management relies on static modules, leaving students eithe
   - Progress Tracking and Motivation: Automated reminders (via GitHub Actions + DryRun) nudge learners when it’s time to review flashcards or retake a quiz, while dashboards track streaks and mastery levels.
   - Rapid Prototyping of Projects: Using Cursor and CodeRabbit, self-learners can scaffold mini-projects (e.g., a simple web app) with AI-suggested code snippets, then test and iterate within the same environment.
 
-##### Workflow Steps:
-1. Content Versioning (Git & GitHub Actions)
-   - Traditional: Instructors manually compile lesson updates and push to LMS via separate tools.
-   - With AI: GitOps-driven CI/CD triggers DryRun and Snyk to validate and secure content automatically, reducing manual QA and accelerating publish cycles.
-2. Ingestion & Validation (FastAPI, DryRun & Snyk)
-   - Traditional: Manual proofreading and security audits for content and code samples.
-   - With AI: Schema validation via DryRun ensures quizzes and flashcards meet structure requirements, while Snyk’s AI-powered vulnerability scanning catches issues in generated code snippets instantly.
-3. Embedding & Indexing (OpenAI & Pinecone with Diamond Monitoring)
-   - Traditional: Static keyword-based search makes it hard to surface contextually relevant passages.
-   - With AI: OpenAI embeddings capture semantic meaning; Pinecone retrieves related lesson segments in milliseconds, enabling dynamic, context-aware reinforcement content. Diamond continuously monitors retrieval performance for reliability.
-4. Adaptive Content Generation (LangChain & LangSmith)
-   - Traditional: Educators handcraft quizzes and flashcards, often with one-size-fits-all difficulty.
-   - With AI: LangChain orchestrates pipelines that assess learner profiles, retrieve appropriate contexts, and generate tailored content via GPT-4. LangSmith tracks prompt effectiveness, enabling rapid iteration on question quality and pacing.
-5. Prototyping & Iteration (Cursor & CodeRabbit)
-   - Traditional: Developers and instructional designers experiment locally, writing boilerplate by hand.
-   - With AI: Cursor notebooks accelerate prototyping of prompt chains, while CodeRabbit suggests context-aware code snippets and UI components, reducing development time and cognitive load.
-6. Learner Interaction & Feedback Loop (React Frontend)
-   - Traditional: Static dashboards require manual data analysis to spot learning gaps.
-   - With AI: Real-time feedback loops feed learner performance back into LangChain chains. AI adjusts content difficulty on the fly, and dashboards surface trends automatically, empowering instructors to focus on high-impact interventions.
-By weaving AI into each step—validation, retrieval, generation, and feedback—StudyMate automates repetitive tasks, personalizes learning at scale, and maintains high content quality.
+#### Workflow Steps:
+1. Upload or Connect Documents:
+   Instructors commit or push Markdown lessons, quizzes, and flashcards to the Git repo; students import external resources or upload files directly. A dashboard banner and toast confirm “Content Indexed: X items ready.”
+   How it works:
+   1. WebhookTrigger: GitHub Actions invokes FastAPI ingestion job.
+   2. Content Parsing: FastAPI clones the repo or ingests uploads, parsing Markdown via markdown-it-py.
+   3. Validation & Security: DryRun validates JSON schemas for quizzes/flashcards; Snyk scans embedded code for vulnerabilities.
+   4. Embedding & Indexing: OpenAI embeddings API vectorizes content; Pinecone upserts vectors with metadata; Diamond exports metrics to Graphite.
+2. Prompt & Generate Content:
+   Educators select “Create Quiz” or “Generate Flashcards,” and students click “Start Quiz.” A prompt interface appears for any custom natural-language instructions.
+   How it works:
+   1. Prompt Engineering: LangChain wraps user input in templates; LangSmith logs prompt usage and performance.
+   2. Profile Retrieval: LangChain fetches learner profiles (history, preferences) from the database.
+   3. Initial AI Call: OpenAI GPT-4 generates seed questions or flashcard outlines based on prompts and profiles.
+3. RAG-Powered Retrieval
+   A loader message “Gathering relevant content…” appears before finalizing quiz or flashcard details.
+   How it works:
+   1. Vector Search: Pinecone queries return top-K semantically related lesson and Q&A chunks.
+   2. Context Assembly: Retrieved text and metadata (topic, difficulty) are collated for AI enrichment.
+4. Structured Generation:
+   A personalized quiz, flashcard set, or study plan renders instantly as a table or interactive card deck.
+   How it works:
+   1. LLM Enrichment: LangChain feeds contexts and seed content into GPT-4 with instructions for JSON or Markdown outputs.
+   2. DryRun or jsonschema validates the AI response against defined structures.
+   3. Formatting: JSON is transformed into UI components or downloadable CSV/Markdown.
+5. Review & Export:
+   Options to “Download CSV/JSON,” “Send to Slack,” or “Publish to LMS” appear alongside content. Educators review analytics before approving.
+   How it Works:
+   1. Export Logging: Prometheus captures export events; Sentry records errors.
+   2. Integration Hooks: Service posts data to webhooks (Slack, LMS APIs, BI tools) or generates pre-signed S3 URLs.
+   3. Feedback Loop: Learner interactions and review approvals feed back into the profiling and prompt-optimization pipelines.
+  
+By following these five stages—Upload or Connect Documents, Prompt & Generate Content, RAG-Powered Retrieval, Structured Generation, and Review & Export—StudyMate automates and personalizes learning workflows from end to end.
 
 
 
