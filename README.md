@@ -99,9 +99,9 @@ By following these five stages—Upload or Connect Documents, Prompt & Generate 
    - **Prometheus/Grafana** dashboards surface system, embedding, and prompt metrics; **Sentry/Rollbar** captures runtime exceptions.
   
 ### Example Prompts & Expected outputs
-**Quiz Generation Prompt**
+- **Quiz Generation Prompt**
 Generate 5 multiple-choice questions covering the Pythagorean theorem. Output a JSON array with fields: question, options[], answer.
-**Expected JSON**  
+- **Expected JSON**  
 [
   {
     "question": "In a right triangle with legs 3 and 4, what is the hypotenuse?",
@@ -110,9 +110,9 @@ Generate 5 multiple-choice questions covering the Pythagorean theorem. Output a 
   },
   …
 ]
-**Flashcard Generation Prompt**
+- **Flashcard Generation Prompt**
 Based on the student’s incorrect answers, retrieve related lesson segments on right-angle triangles and create 3 flashcards with term and definition in JSON.
-**Expected JSON**
+- **Expected JSON**
 [
   {
     "term": "Pythagorean Theorem",
