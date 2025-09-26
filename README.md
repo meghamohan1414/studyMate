@@ -77,6 +77,26 @@ By following these five stages—Upload or Connect Documents, Prompt & Generate 
   - _Tools:_ Prometheus/Grafana for system telemetry, LangSmith for prompt analytics, Sentry/Rollbar for error tracking  
   - _Why:_ Monitors performance, reliability, and prompt health to support SLAs and rapid debugging.
 
+#### Technical Approach
 
+1. **CI/CD & Content Ingestion**  
+   - **GitHub Actions** runs DryRun schema checks and Snyk scans on each commit.  
+   - **FastAPI** microservices handle webhooks to clone repos or process uploads.
+
+2. **Embedding & Vector Store**  
+   - **OpenAI Embeddings API** vectorizes content chunks.  
+   - **Pinecone** indexes and stores vectors; **Diamond** exports metrics to Graphite/Grafana.
+
+3. **Orchestration & Prompting**  
+   - **LangChain** pipelines sequence Pinecone retrieval and GPT-4 generation steps.  
+   - **LangSmith** captures prompt usage, latency, and quality metrics for ongoing optimization.
+
+4. **IDE & Developer Productivity**  
+   - **Cursor** notebooks enable interactive prompt and chain prototyping.  
+   - **CodeRabbit** suggests scaffold code for new workflows and React UI components.
+
+5. **Deployment & Monitoring**  
+   - Dockerized microservices (FastAPI, LangChain) run on Kubernetes, managed via Terraform.  
+   - **Prometheus/Grafana** dashboards surface system, embedding, and prompt metrics; **Sentry/Rollbar** captures runtime exceptions.
 
 
