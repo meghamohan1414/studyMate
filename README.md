@@ -1,2 +1,2 @@
-# studyMate
-AI-Driven Personalized Learning Companion
+# StudyMate: AI Driven Personalized Learning Companion
+
