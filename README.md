@@ -87,7 +87,7 @@ By following these five stages—Upload or Connect Documents, Prompt & Generate 
    - **Pinecone** indexes and stores vectors; **Diamond** exports metrics to Graphite/Grafana.
 
 3. **Orchestration & Prompting**  
-   - **LangChain** pipelines sequence Pinecone retrieval and GPT-4 generation steps.  
+   - **LangChain** pipelines sequence vector retrieval from Pinecone and GPT-4 generation steps.  
    - **LangSmith** captures prompt usage, latency, and quality metrics for ongoing optimization.
 
 4. **IDE & Developer Productivity**  
@@ -95,8 +95,8 @@ By following these five stages—Upload or Connect Documents, Prompt & Generate 
    - **CodeRabbit** suggests scaffold code for new workflows and React UI components.
 
 5. **Deployment & Monitoring**  
-   - Dockerized microservices (FastAPI, LangChain) run on Kubernetes, managed via Terraform.  
-   - **Prometheus/Grafana** dashboards surface system, embedding, and prompt metrics; **Sentry/Rollbar** captures runtime exceptions.
+   - Store all code and infrastructure as code in Git; use GitHub Actions for testing, DryRun schema checks, and Snyk vulnerability scans.  
+   - Deploy on Kubernetes; monitor with Prometheus/Grafana and capture errors with Sentry (or Rollbar).
   
 ### Example Prompts & Expected outputs
 - **Quiz Generation Prompt**
